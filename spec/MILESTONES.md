@@ -43,9 +43,10 @@
 
 ## Milestone 4 — עלייה לאוויר
 > Milestone סופי: deploy כדי שאחרים יוכלו להשתמש.
-- [ ] סקריפטי build/start ברמת השורש (build לונה client+server, start מריץ את השרת)
-- [ ] `git init` והעלאת הקוד ל-GitHub
-- [ ] Deploy ל-Render (Web Service יחיד, הגדרת `OPENAI_API_KEY`)
+- [x] סקריפטי build/start ברמת השורש (build בונה client+server, start מריץ את השרת) — נבדק מקומית במצב production
+- [x] `git init` והעלאת הקוד ל-GitHub (github.com/AssafFink/ai-jokes)
+- [x] `render.yaml` (Blueprint לשירות יחיד) + הגשת סטטי לפי קיום ה-build
+- [ ] Deploy ל-Render (פתיחת חשבון, חיבור הריפו, הגדרת `OPENAI_API_KEY`) — ממתין לפעולת המפתח
 - **מוכן כאשר:** האתר עובד בקישור ציבורי, ו-push מפעיל deploy אוטומטי.
 
 ---
@@ -55,3 +56,4 @@
 - 2026-09-19 — Milestone 1 (Walking Skeleton) נבנה ונבדק: monorepo client+server, Route stub, הלקוח קורא ומציג, dev proxy עובד. 🟢
 - 2026-09-19 — Milestone 2 (יצירת בדיחה אמיתית) נבנה ונבדק: חיבור ל-OpenAI gpt-4o-mini, פרומפט נושא/רנדומלי + התאמת שפה, טעינת מפתח מ-.env, טיפול בשגיאות. נבדק ב-UI (עברית/אנגלית/רנדומלי). 🟢
 - 2026-09-19 — Milestone 3 (ליטוש UX ועיצוב) נבנה ונבדק: ספינר טעינה + השבתת כפתור/תיבה, שליחה ב-Enter, אנימציית fade-in, עיצוב מינימלי סופי. נבדק בדסקטופ ובמובייל. 🟢
+- 2026-09-19 — Milestone 4 (עלייה לאוויר) — קוד וקונפיג מוכנים: סקריפטי build/start, render.yaml, הגשת סטטי לפי build. נבדק מקומית במצב production (index.html + /api/joke). ממתין לפריסה ב-Render (פעולת המפתח).

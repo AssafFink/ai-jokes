@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { jokeRouter } from "./routes/joke.js";
@@ -12,14 +13,15 @@ app.use(express.json());
 // Single API route
 app.use("/api/joke", jokeRouter);
 
-// In production, serve the built React client from client/dist.
-// This keeps everything on a single service (single URL, no CORS).
+// Serve the built React client from client/dist when it exists (production).
+// This keeps everything on a single service (single URL, no CORS). In local
+// dev the build is absent and Vite serves the client instead.
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const clientDist = path.resolve(__dirname, "../../client/dist");
 
-if (process.env.NODE_ENV === "production") {
+if (fs.existsSync(clientDist)) {
   app.use(express.static(clientDist));
-  // SPA fallback: send index.html for any non-API route.
+  // SPA fallback: send index.html for any non-API GET route.
   app.get("*", (_req, res) => {
     res.sendFile(path.join(clientDist, "index.html"));
   });

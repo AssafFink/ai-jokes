@@ -1,0 +1,18 @@
+# Render Blueprint: single Node web service that builds the React client
+# and serves both the static client and the /api/joke endpoint.
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: ai-jokes
+    runtime: node
+    plan: free
+    # --include=dev ensures Vite/TypeScript (devDependencies) are available
+    # for the build step even if the environment sets NODE_ENV=production.
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Set the actual value in the Render dashboard (kept out of git).
+      - key: OPENAI_API_KEY
+        sync: false
