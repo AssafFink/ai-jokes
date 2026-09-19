@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { fetchJoke } from "./api";
 
 export default function App() {
@@ -8,6 +8,7 @@ export default function App() {
   const [error, setError] = useState("");
 
   async function handleGenerate() {
+    if (loading) return;
     setLoading(true);
     setError("");
     try {
@@ -17,6 +18,12 @@ export default function App() {
       setError("משהו השתבש ביצירת הבדיחה. נסו שוב.");
     } finally {
       setLoading(false);
+    }
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      handleGenerate();
     }
   }
 
@@ -31,15 +38,33 @@ export default function App() {
           type="text"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
+          onKeyDown={handleKeyDown}
+          disabled={loading}
           placeholder="נושא לבדיחה — או השאירו ריק לנושא רנדומלי"
         />
 
-        <button className="generate-btn" onClick={handleGenerate} disabled={loading}>
-          {loading ? "מייצר…" : "צור בדיחה"}
+        <button
+          className="generate-btn"
+          onClick={handleGenerate}
+          disabled={loading}
+          aria-busy={loading}
+        >
+          {loading ? (
+            <>
+              <span className="spinner" aria-hidden="true" />
+              מייצר…
+            </>
+          ) : (
+            "צור בדיחה"
+          )}
         </button>
 
         {error && <p className="error">{error}</p>}
-        {joke && !error && <p className="joke">{joke}</p>}
+        {joke && !error && (
+          <p key={joke} className={`joke${loading ? " joke--stale" : ""}`}>
+            {joke}
+          </p>
+        )}
       </section>
     </main>
   );
